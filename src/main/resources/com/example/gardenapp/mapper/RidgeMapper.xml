@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gardenapp.mapper.RidgeMapper">
+    <select id="findAll" resultType="com.example.gardenapp.model.Ridge">
+        SELECT id, name, width, height, x, y FROM ridges
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ridges (farmland_id, name, width, height, x, y) 
+        VALUES 
+        <foreach collection="list" item="ridge" separator=",">
+            (#{ridge.farmlandId}, #{ridge.name}, #{ridge.width}, #{ridge.height}, #{ridge.x}, #{ridge.y})
+        </foreach>
+    </insert>
+</mapper>

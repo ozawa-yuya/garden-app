@@ -1,0 +1,72 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>作付計画支援アプリ</title>
+  </head>
+  <body>
+    <h1>作付計画支援アプリ</h1>
+    <p th:text="${msg}"></p>
+    <form th:action="@{/index/result}" method="post" th:object="${inputForm}">
+      <h2>農地情報</h2>
+      幅(cm)<input type="number" th:field="*{farmlandWidth}" /><br />
+      奥行(cm)<input type="number" th:field="*{farmlandHeight}" /><br />
+      余白(cm)<input type="number" th:field="*{farmlandOffset}" /><br />
+
+      <ul th:if="${#fields.hasErrors('farmland*')}">
+        <li
+          th:each="err : ${#fields.errors('farmland*')}"
+          th:text="${err}"
+          style="color: red"
+        ></li>
+      </ul>
+
+      <h2>畝情報</h2>
+      幅(cm)<input type="number" th:field="*{ridgeWidth}" /><br />
+      奥行(cm)<input type="number" th:field="*{ridgeHeight}" /><br />
+      畝間(cm)<input type="number" th:field="*{ridgeGap}" /><br />
+
+      <ul th:if="${#fields.hasErrors('ridge*')}">
+        <li
+          th:each="err : ${#fields.errors('ridge*')}"
+          th:text="${err}"
+          style="color: red"
+        ></li>
+      </ul>
+
+      <h2>作付計画</h2>
+
+      <div id="selection-area">
+        <div th:each="i : ${#numbers.sequence(0,9)}">
+          野菜
+          <select th:field="*{selections[__${i}__].vegetableId}">
+            <option value="">-- 選択してください --</option>
+            <option
+              th:each="v : ${vegetableList}"
+              th:value="${v.id}"
+              th:text="${v.name}"
+            ></option>
+          </select>
+          株数<input
+            type="number"
+            th:field="*{selections[__${i}__].quantity}"
+          />
+          条数<input
+            type="number"
+            th:field="*{selections[__${i}__].rowsCount}"
+          />
+
+          <ul th:if="${#fields.hasErrors('selections[' + i + '].*')}">
+            <li
+              th:each="err : ${#fields.errors('selections[' + i + '].*')}"
+              th:text="${err}"
+              style="color: red"
+            ></li>
+          </ul>
+        </div>
+      </div>
+
+      <button type="submit">決定</button>
+    </form>
+  </body>
+</html>

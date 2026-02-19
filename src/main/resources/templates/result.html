@@ -1,0 +1,18 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>作付計画支援アプリ</title>
+  </head>
+  <body>
+    <h2>配置結果</h2>
+    <div th:each="ridge : ${farmland.ridgeList}">
+      <div th:each="plant : ${ridge.plantAreaList}">
+        <p th:text="|野菜：${plant.vegetable.name}|"></p>
+      </div>
+    </div>
+    <form th:action="@{/index/save}" method="post">
+      <button type="submit">配置結果を保存</button>
+    </form>
+  </body>
+</html>

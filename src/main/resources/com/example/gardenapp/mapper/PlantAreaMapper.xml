@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gardenapp.mapper.PlantAreaMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO plant_areas (vegetable_id, ridge_id, quantity, rows_count, x, y, width, height) 
+      VALUES 
+    <foreach collection="list" item="area" separator=",">
+        (#{area.vegetable.id}, #{area.ridgeId}, #{area.quantity}, #{area.rowsCount}, 
+         #{area.x}, #{area.y}, #{area.width}, #{area.height})
+    </foreach>
+</insert>
+</mapper>

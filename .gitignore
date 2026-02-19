@@ -1,0 +1,28 @@
+# --- Java / Gradle ---
+.gradle/
+build/
+bin/
+out/
+
+# --- IDE (VS Code) ---
+.vscode/
+*.code-workspace
+
+# --- IDE (Eclipse) ---
+.settings/
+.classpath
+.project
+.factorypath
+
+# --- IDE (IntelliJ) ---
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# ログファイル
+*.log
