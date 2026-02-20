@@ -3,16 +3,82 @@
   <head>
     <meta charset="UTF-8" />
     <title>作付計画支援アプリ</title>
+    <link rel="stylesheet" th:href="@{/css/result.css}" />
   </head>
   <body>
-    <h2>配置結果</h2>
-    <div th:each="ridge : ${farmland.ridgeList}">
-      <div th:each="plant : ${ridge.plantAreaList}">
-        <p th:text="|野菜：${plant.vegetable.name}|"></p>
+    <header>
+      <h2>🍀 野菜の配置図</h2>
+      <p>※茶色の枠が「畝（うね）」、緑色の枠が「野菜」です。</p>
+    </header>
+    <div class="total-info">
+      <div class="info-item">
+        <span class="info-label">農地サイズ:</span>
+        <span
+          th:text="${farmland.width} + ' × ' + ${farmland.height} + 'cm'"
+        ></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">畝間:</span>
+        <span th:text="${farmland.gap} + 'cm'"></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">外周余白:</span>
+        <span th:text="${farmland.offset} + 'cm'"></span>
       </div>
     </div>
-    <form th:action="@{/index/save}" method="post">
-      <button type="submit">配置結果を保存</button>
-    </form>
+    <div
+      class="farmland"
+      th:style="'width:' + ${farmland.width * 2} + 'px; height:' + ${farmland.height * 2} + 'px;'"
+    >
+      <div
+        th:each="ridge : ${farmland.ridgeList}"
+        class="ridge"
+        th:style="'left:' + ${ridge.x * 2} + 'px; 
+                       top:' + ${ridge.y * 2} + 'px; 
+                       width:' + ${ridge.width * 2} + 'px; 
+                       height:' + ${ridge.height * 2} + 'px;'"
+      >
+        <span class="ridge-label">
+          <span th:text="${ridge.name}">畝-1</span>
+          <small
+            class="dimension"
+            th:text="'(' + ${ridge.width} + 'cm × ' + ${ridge.height} + 'cm)'"
+          ></small>
+        </span>
+
+        <div
+          th:each="plant : ${ridge.plantAreaList}"
+          class="plant-area"
+          th:style="'left:' + ${(plant.x - ridge.x) * 2} + 'px; 
+                           top:' + ${(plant.y - ridge.y) * 2} + 'px; 
+                           width:' + ${plant.width * 2} + 'px; 
+                           height:' + ${plant.height * 2} + 'px;'"
+        >
+          <div class="plant-content">
+            <strong class="v-name" th:text="${plant.vegetable.name}"
+              >野菜名</strong
+            >
+
+            <div class="v-details">
+              <span
+                class="v-quantity"
+                th:text="${plant.quantity} + '株'"
+              ></span>
+              <span
+                class="v-total-size"
+                th:text="'(' + ${plant.width} + '×' + ${plant.height} + 'cm)'"
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <form th:action="@{/index/save}" method="post">
+        <button type="submit" class="save-button">この計画を保存する</button>
+      </form>
+      <a href="/" class="back-link">やり直す</a>
+    </div>
   </body>
 </html>

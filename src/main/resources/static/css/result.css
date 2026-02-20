@@ -1,0 +1,159 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f9f7f2;
+  font-family:
+    "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  padding: 40px;
+  color: #443a36;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+header h2 {
+  font-size: 28px;
+  letter-spacing: 1px;
+}
+
+.total-info {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.info-item {
+  background-color: #ffffff;
+  padding: 8px 20px;
+  border-radius: 50px;
+  border: 2px solid #d7ccc8;
+  color: #5d4037;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.info-label {
+  font-size: 13px;
+  color: #8d6e63;
+  margin-right: 8px;
+  font-weight: normal;
+}
+
+.farmland {
+  position: relative;
+  background-color: #a1887f;
+  border-radius: 20px;
+  margin: 40px auto;
+  border: 4px solid #8d6e63;
+}
+
+.ridge {
+  position: absolute;
+  background-color: #d7ccc8;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.ridge-label {
+  position: absolute;
+  top: -35px;
+  left: 8px;
+  background-color: #5d4037;
+  color: #ffffff;
+  padding: 4px 14px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.plant-area {
+  position: absolute;
+  background-color: #529255;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.v-name {
+  font-size: 22px;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 2px;
+  white-space: nowrap;
+}
+
+.v-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.v-quantity {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.v-total-size {
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.dimension {
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+.actions {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.save-button {
+  font-size: 20px;
+  padding: 18px 50px;
+  background-color: #fb8c00;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 0 #e65100;
+  transition: all 0.2s;
+}
+
+.save-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #e65100;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 25px;
+  color: #8d6e63;
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 1px solid #8d6e63;
+}
