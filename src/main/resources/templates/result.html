@@ -8,7 +8,6 @@
   <body>
     <header>
       <h2>🍀 野菜の配置図</h2>
-      <p>※茶色の枠が「畝（うね）」、緑色の枠が「野菜」です。</p>
     </header>
     <div class="total-info">
       <div class="info-item">
@@ -26,52 +25,95 @@
         <span th:text="${farmland.offset} + 'cm'"></span>
       </div>
     </div>
-    <div
-      class="farmland"
-      th:style="'width:' + ${farmland.width * 2} + 'px; height:' + ${farmland.height * 2} + 'px;'"
-    >
-      <div
-        th:each="ridge : ${farmland.ridgeList}"
-        class="ridge"
-        th:style="'left:' + ${ridge.x * 2} + 'px; 
-                       top:' + ${ridge.y * 2} + 'px; 
-                       width:' + ${ridge.width * 2} + 'px; 
-                       height:' + ${ridge.height * 2} + 'px;'"
-      >
-        <span class="ridge-label">
-          <span th:text="${ridge.name}">畝-1</span>
-          <small
-            class="dimension"
-            th:text="'(' + ${ridge.width} + 'cm × ' + ${ridge.height} + 'cm)'"
-          ></small>
-        </span>
 
+    <div class="result-main-content">
+      <div class="layout-container">
         <div
-          th:each="plant : ${ridge.plantAreaList}"
-          class="plant-area"
-          th:style="'left:' + ${(plant.x - ridge.x) * 2} + 'px; 
-                           top:' + ${(plant.y - ridge.y) * 2} + 'px; 
-                           width:' + ${plant.width * 2} + 'px; 
-                           height:' + ${plant.height * 2} + 'px;'"
+          class="farmland"
+          th:style="'width:' + ${farmland.width * 2} + 'px; height:' + ${farmland.height * 2} + 'px;'"
         >
-          <div class="plant-content">
-            <strong class="v-name" th:text="${plant.vegetable.name}"
-              >野菜名</strong
-            >
+          <div
+            th:each="ridge : ${farmland.ridgeList}"
+            class="ridge"
+            th:style="'left:' + ${ridge.x * 2} + 'px;
+                       top:' + ${ridge.y * 2} + 'px;
+                       width:' + ${ridge.width * 2} + 'px;
+                       height:' + ${ridge.height * 2} + 'px;'"
+          >
+            <span class="ridge-label">
+              <span th:text="${ridge.name}">畝-1</span>
+              <small
+                class="dimension"
+                th:text="'(' + ${ridge.width} + 'cm × ' + ${ridge.height} + 'cm)'"
+              ></small>
+            </span>
 
-            <div class="v-details">
-              <span
-                class="v-quantity"
-                th:text="${plant.quantity} + '株'"
-              ></span>
-              <span
-                class="v-total-size"
-                th:text="'(' + ${plant.width} + '×' + ${plant.height} + 'cm)'"
-              ></span>
+            <div
+              th:each="plant : ${ridge.plantAreaList}"
+              class="plant-area"
+              th:style="'left:' + ${(plant.x - ridge.x) * 2} + 'px;
+                           top:' + ${(plant.y - ridge.y) * 2} + 'px;
+                           width:' + ${plant.width * 2} + 'px;
+                           height:' + ${plant.height * 2} + 'px;'"
+            >
+              <div class="plant-content">
+                <strong class="v-name" th:text="${plant.vegetable.name}"
+                  >野菜名</strong
+                >
+
+                <div class="v-details">
+                  <span
+                    class="v-quantity"
+                    th:text="${plant.quantity} + '株 / '"
+                  ></span>
+                  <span
+                    class="v-quantity"
+                    th:text="${plant.rowsCount} + '条'"
+                  ></span>
+                  <span
+                    class="v-total-size"
+                    th:text="'(' + ${plant.width} + '×' + ${plant.height} + 'cm)'"
+                  ></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <aside class="side-planting-guide">
+        <h3 class="guide-title">📏 定植間隔</h3>
+        <table class="mini-specs-table">
+          <thead>
+            <tr>
+              <th>野菜</th>
+              <th>株間</th>
+              <th>条間</th>
+            </tr>
+          </thead>
+          <tbody>
+            <th:block th:each="ridge : ${farmland.ridgeList}">
+              <tr th:each="plant : ${ridge.plantAreaList}">
+                <td class="name-cell" th:text="${plant.vegetable.name}">
+                  ナス
+                </td>
+                <td
+                  class="dim-cell"
+                  th:text="${plant.vegetable.unitWidth} + 'cm'"
+                >
+                  30cm
+                </td>
+                <td
+                  class="dim-cell"
+                  th:text="${plant.vegetable.unitHeight} + 'cm'"
+                >
+                  40cm
+                </td>
+              </tr>
+            </th:block>
+          </tbody>
+        </table>
+      </aside>
     </div>
 
     <div class="actions">

@@ -50,11 +50,97 @@ header h2 {
   font-weight: normal;
 }
 
+/* 全体を横並びにするコンテナ */
+.result-main-content {
+  display: flex;
+  gap: 20px; /* レイアウトと表の間隔 */
+  justify-content: center;
+  align-items: flex-start;
+  margin: 40px auto; /* 画面全体に対しても中央に配置 */
+  max-width: 1200px; /* 広がりすぎないように最大幅を設定 */
+}
+
+/* 配置図のコンテナ（スクロール制御） */
+.layout-container {
+  flex: 0 1 auto;
+  overflow-x: auto;
+}
+
+/* サイドガイドのスタイル */
+.side-planting-guide {
+  width: 280px; /* 幅を固定してスッキリさせる */
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  border: 3px solid #8d6e63;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  position: sticky; /* スクロールしてもついてくるように設定 */
+  top: 20px;
+}
+
+.guide-title {
+  font-size: 18px;
+  color: #2e7d32;
+  margin-bottom: 15px;
+  text-align: center;
+  border-bottom: 2px solid #c8e6c9;
+  padding-bottom: 10px;
+}
+
+.mini-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mini-specs-table th {
+  font-size: 12px;
+  color: #8d6e63;
+  padding: 8px;
+  border-bottom: 2px solid #f0ede9;
+}
+
+.mini-specs-table td {
+  padding: 10px 5px;
+  border-bottom: 1px solid #f0ede9;
+  font-size: 14px;
+  text-align: center;
+}
+
+.name-cell {
+  font-weight: bold;
+  text-align: left !important;
+  color: #5d4037;
+}
+
+.dim-cell {
+  font-family: "Courier New", Courier, monospace; /* 数値を読みやすく */
+  font-weight: bold;
+}
+
+.guide-note {
+  font-size: 11px;
+  color: #8d6e63;
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* スマホ対応：画面が狭いときは縦に並べる */
+@media (max-width: 1024px) {
+  .result-main-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .side-planting-guide {
+    width: 100%;
+    max-width: 500px;
+    position: static;
+  }
+}
+
 .farmland {
   position: relative;
   background-color: #a1887f;
   border-radius: 20px;
-  margin: 40px auto;
   border: 4px solid #8d6e63;
 }
 
@@ -102,6 +188,7 @@ header h2 {
 }
 
 .v-details {
+  font-size: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
