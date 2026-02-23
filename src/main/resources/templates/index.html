@@ -2,71 +2,231 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>作付計画支援アプリ</title>
+    <title>家庭菜園シミュレーター</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
   </head>
   <body>
-    <h1>作付計画支援アプリ</h1>
-    <p th:text="${msg}"></p>
-    <form th:action="@{/index/result}" method="post" th:object="${inputForm}">
-      <h2>農地情報</h2>
-      幅(cm)<input type="number" th:field="*{farmlandWidth}" /><br />
-      奥行(cm)<input type="number" th:field="*{farmlandHeight}" /><br />
-      余白(cm)<input type="number" th:field="*{farmlandOffset}" /><br />
+    <div class="main-container">
+      <header class="hero">
+        <h1>🍀 家庭菜園シミュレーター</h1>
+        <p>野菜の最適な配置をシミュレーションします</p>
+      </header>
 
-      <ul th:if="${#fields.hasErrors('farmland*')}">
-        <li
-          th:each="err : ${#fields.errors('farmland*')}"
-          th:text="${err}"
-          style="color: red"
-        ></li>
-      </ul>
-
-      <h2>畝情報</h2>
-      幅(cm)<input type="number" th:field="*{ridgeWidth}" /><br />
-      奥行(cm)<input type="number" th:field="*{ridgeHeight}" /><br />
-      畝間(cm)<input type="number" th:field="*{ridgeGap}" /><br />
-
-      <ul th:if="${#fields.hasErrors('ridge*')}">
-        <li
-          th:each="err : ${#fields.errors('ridge*')}"
-          th:text="${err}"
-          style="color: red"
-        ></li>
-      </ul>
-
-      <h2>作付計画</h2>
-
-      <div id="selection-area">
-        <div th:each="i : ${#numbers.sequence(0,9)}">
-          野菜
-          <select th:field="*{selections[__${i}__].vegetableId}">
-            <option value="">-- 選択してください --</option>
-            <option
-              th:each="v : ${vegetableList}"
-              th:value="${v.id}"
-              th:text="${v.name}"
-            ></option>
-          </select>
-          株数<input
-            type="number"
-            th:field="*{selections[__${i}__].quantity}"
-          />
-          条数<input
-            type="number"
-            th:field="*{selections[__${i}__].rowsCount}"
-          />
-
-          <ul th:if="${#fields.hasErrors('selections[' + i + '].*')}">
-            <li
-              th:each="err : ${#fields.errors('selections[' + i + '].*')}"
-              th:text="${err}"
-              style="color: red"
-            ></li>
-          </ul>
+      <section class="guide">
+        <div class="step">
+          <span class="step-num">1</span>
+          <p>畑のサイズを入力</p>
         </div>
-      </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <p>育てたい野菜を選択</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <p>最適な配置を確認！</p>
+        </div>
+      </section>
 
-      <button type="submit">決定</button>
-    </form>
+      <!-- 保存完了メッセージ -->
+      <div th:if="${msg}" class="success-message" th:text="${msg}"></div>
+
+      <main class="form-card">
+        <form
+          th:action="@{/index/result}"
+          method="post"
+          th:object="${inputForm}"
+        >
+          <div class="input-group">
+            <label>畑のサイズ（cm）</label>
+            <div class="inline-inputs">
+              <input
+                type="number"
+                th:field="*{farmlandWidth}"
+                placeholder="幅"
+                min="1"
+                required
+              />
+              <span>×</span>
+              <input
+                type="number"
+                th:field="*{farmlandHeight}"
+                placeholder="奥行き"
+                min="1"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>外周の余白（cm）</label>
+            <input
+              type="number"
+              th:field="*{farmlandOffset}"
+              placeholder="20"
+              min="0"
+              required
+            />
+          </div>
+
+          <div th:if="${#fields.hasErrors('farmland*')}" class="error-summary">
+            <ul>
+              <li
+                th:each="err : ${#fields.errors('farmland*')}"
+                th:text="${err}"
+              ></li>
+            </ul>
+          </div>
+
+          <div class="input-group">
+            <label>畝のサイズ（cm）</label>
+            <div class="inline-inputs">
+              <input
+                type="number"
+                th:field="*{ridgeWidth}"
+                placeholder="幅"
+                min="1"
+                required
+              />
+              <span>×</span>
+              <input
+                type="number"
+                th:field="*{ridgeHeight}"
+                placeholder="奥行き"
+                min="1"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>通路（畝間）の幅（cm）</label>
+            <input
+              type="number"
+              th:field="*{ridgeGap}"
+              placeholder="40"
+              min="1"
+              required
+            />
+          </div>
+
+          <div th:if="${#fields.hasErrors('ridge*')}" class="error-summary">
+            <ul>
+              <li
+                th:each="err : ${#fields.errors('ridge*')}"
+                th:text="${err}"
+              ></li>
+            </ul>
+          </div>
+
+          <div id="selection-area">
+            <h3 class="section-title">
+              育てたい野菜を選んで、数を入れてください
+            </h3>
+
+            <div class="vegetable-grid">
+              <div
+                th:each="v, stat : ${vegetableList}"
+                class="v-selection-card"
+              >
+                <input
+                  type="checkbox"
+                  th:id="'v-' + ${stat.index}"
+                  class="v-checkbox"
+                  th:onchange="|toggleInputs(this, ${stat.index}, ${v.id})|"
+                />
+
+                <input
+                  type="hidden"
+                  th:id="'hidden-id-' + ${stat.index}"
+                  th:name="|selections[${stat.index}].vegetableId|"
+                  value=""
+                />
+
+                <label th:for="'v-' + ${stat.index}" class="v-card-label">
+                  <div class="v-card-inner">
+                    <span
+                      class="v-icon"
+                      th:text="${v.family == 'ナス科' ? '🍆' : (v.family == 'ウリ科' ? '🥒' : (v.family == 'ヒルガオ科' ? '🍠' : '🌱'))}"
+                    >
+                    </span>
+                    <strong class="v-name" th:text="${v.name}"
+                      >サツマイモ</strong
+                    >
+                    <span
+                      class="v-unit-info"
+                      th:text="${v.unitWidth} + '×' + ${v.unitHeight} + 'cm'"
+                    ></span>
+                  </div>
+                </label>
+
+                <div th:id="'inputs-' + ${stat.index}" class="v-inputs-overlay">
+                  <div class="input-row">
+                    <label>株数</label>
+                    <input
+                      type="number"
+                      th:id="'qty-' + ${stat.index}"
+                      th:name="|selections[${stat.index}].quantity|"
+                      placeholder="0"
+                      min="1"
+                      disabled
+                    />
+                    <span>株</span>
+                  </div>
+                  <div class="input-row">
+                    <label>条数</label>
+                    <input
+                      type="number"
+                      th:id="'rows-' + ${stat.index}"
+                      th:name="|selections[${stat.index}].rowsCount|"
+                      placeholder="0"
+                      min="1"
+                      disabled
+                    />
+                    <span>条</span>
+                  </div>
+                </div>
+
+                <div
+                  th:if="${#fields.hasErrors('selections[' + stat.index + '].*')}"
+                  class="error-container-mini"
+                >
+                  <ul>
+                    <li
+                      th:each="err : ${#fields.errors('selections[' + stat.index + '].*')}"
+                      th:text="${err}"
+                    ></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="start-button">配置を計算する</button>
+        </form>
+      </main>
+    </div>
+
+    <script th:inline="javascript">
+      function toggleInputs(checkbox, index, vegetableId) {
+        const idInput = document.getElementById("hidden-id-" + index);
+        const qtyInput = document.getElementById("qty-" + index);
+        const rowsInput = document.getElementById("rows-" + index);
+
+        if (checkbox.checked) {
+          // チェック時：IDをセットし、数値入力を有効化
+          idInput.value = vegetableId;
+          qtyInput.disabled = false;
+          rowsInput.disabled = false;
+          qtyInput.focus(); // 入力しやすくするためにフォーカス
+        } else {
+          // 解除時：IDをクリアし、数値入力を無効化（送信されないようにする）
+          idInput.value = "";
+          qtyInput.disabled = true;
+          rowsInput.disabled = true;
+          qtyInput.value = "";
+          rowsInput.value = "";
+        }
+      }
+    </script>
   </body>
 </html>

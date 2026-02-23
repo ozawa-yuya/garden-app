@@ -1,0 +1,275 @@
+/* 全体設定 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f9f7f2;
+  font-family:
+    "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  color: #443a36;
+  line-height: 1.6;
+}
+
+.main-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* ヒーローセクション */
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  font-size: 32px;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #8d6e63;
+}
+
+/* ガイドセクション */
+.guide {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 20px;
+  border: 2px solid #e0e0e0;
+}
+
+.step {
+  text-align: center;
+}
+
+.step-num {
+  background: #8d6e63;
+  color: white;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  border-radius: 50%;
+  line-height: 30px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* フォームカード */
+.form-card {
+  background: white;
+  padding: 40px;
+  border-radius: 25px;
+  border: 4px solid #8d6e63; /* 結果画面の農地枠線と統一 */
+}
+
+.input-group {
+  margin-bottom: 25px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #5d4037;
+}
+
+/* 入力ボックスをモダンに */
+input[type="number"] {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 18px;
+  border: 2px solid #d7ccc8;
+  border-radius: 10px;
+  transition: border-color 0.3s;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #2e7d32;
+}
+
+.inline-inputs {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.inline-inputs span {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* ボタン（結果画面の保存ボタンと共通のデザイン） */
+.start-button {
+  width: 100%;
+  font-size: 22px;
+  padding: 18px;
+  background-color: #fb8c00;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 0 #e65100;
+  transition: all 0.2s;
+  margin-top: 20px;
+}
+
+.start-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #e65100;
+}
+
+#selection-area {
+  margin-top: 40px;
+}
+
+.section-title {
+  font-size: 20px;
+  color: #5d4037;
+  margin-bottom: 20px;
+  border-left: 5px solid #2e7d32;
+  padding-left: 15px;
+}
+
+/* 野菜グリッド */
+.vegetable-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* 隠しチェックボックス */
+.v-checkbox {
+  display: none;
+}
+
+/* カードのデザイン */
+.v-card-label {
+  display: block;
+  cursor: pointer;
+  background: #ffffff;
+  border: 3px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 20px 10px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.v-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.v-name {
+  display: block;
+  font-size: 18px;
+  color: #5d4037;
+}
+
+.v-unit-info {
+  font-size: 12px;
+  color: #8d6e63;
+}
+
+/* チェックされた時の変化 */
+.v-checkbox:checked + .v-card-label {
+  border-color: #2e7d32;
+  background-color: #e8f5e9;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(46, 125, 50, 0.2);
+}
+
+/* 入力エリア（通常は隠す、チェックされたら出す） */
+.v-inputs-overlay {
+  display: none;
+  margin-top: 10px;
+  background: #ffffff;
+  border: 2px solid #2e7d32;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.v-checkbox:checked ~ .v-inputs-overlay {
+  display: block;
+  animation: fadeIn 0.3s;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.input-row label {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.input-row input {
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 保存完了メッセージ */
+.success-message {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 2px solid #2e7d32;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* 共通エラー表示（畑サイズなど） */
+.error-summary {
+  list-style: none;
+  background: #fff5f5;
+  border-left: 5px solid #d32f2f;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+/* カード内の小さなエラー表示 */
+.error-container-mini {
+  margin-top: 5px;
+  font-size: 11px;
+  text-align: center;
+  color: #d32f2f;
+}
+.error-container-mini ul {
+  list-style: none;
+  padding: 0;
+}
