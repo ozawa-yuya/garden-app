@@ -179,9 +179,38 @@ input[type="number"]:focus {
   color: #5d4037;
 }
 
-.v-unit-info {
+.v-unit-info-box {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #d7ccc8; /* 区切り線を入れて数値を目立たせる */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.v-spec-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 10px;
+}
+
+.v-spec-item .label {
   font-size: 12px;
   color: #8d6e63;
+  font-weight: bold;
+}
+
+.v-spec-item .value {
+  font-size: 16px; /* 文字を大きく設定 */
+  font-weight: 800;
+  color: #443a36;
+}
+
+.v-spec-item .value small {
+  font-size: 10px;
+  margin-left: 2px;
+  font-weight: normal;
 }
 
 /* チェックされた時の変化 */

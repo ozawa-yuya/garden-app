@@ -147,15 +147,27 @@
                     <span
                       class="v-icon"
                       th:text="${v.family == 'ナス科' ? '🍆' : (v.family == 'ウリ科' ? '🥒' : (v.family == 'ヒルガオ科' ? '🍠' : '🌱'))}"
-                    >
-                    </span>
+                    ></span>
                     <strong class="v-name" th:text="${v.name}"
                       >サツマイモ</strong
                     >
-                    <span
-                      class="v-unit-info"
-                      th:text="${v.unitWidth} + '×' + ${v.unitHeight} + 'cm'"
-                    ></span>
+
+                    <div class="v-unit-info-box">
+                      <div class="v-spec-item">
+                        <span class="label">株間</span>
+                        <span class="value"
+                          ><th:block th:text="${v.unitWidth}"></th:block
+                          ><small>cm</small></span
+                        >
+                      </div>
+                      <div class="v-spec-item">
+                        <span class="label">条間</span>
+                        <span class="value"
+                          ><th:block th:text="${v.unitHeight}"></th:block
+                          ><small>cm</small></span
+                        >
+                      </div>
+                    </div>
                   </div>
                 </label>
 
