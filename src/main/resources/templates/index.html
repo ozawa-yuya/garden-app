@@ -42,7 +42,7 @@
               <input
                 type="number"
                 th:field="*{farmlandWidth}"
-                placeholder="幅"
+                placeholder="幅（東西）"
                 min="1"
                 required
               />
@@ -50,11 +50,15 @@
               <input
                 type="number"
                 th:field="*{farmlandHeight}"
-                placeholder="奥行き"
+                placeholder="奥行（南北）"
                 min="1"
                 required
               />
             </div>
+            <p class="input-hint">
+              <strong>奥行（南北）</strong
+              >が図面の上下方向になります。上が<strong>北</strong>として計算されます。
+            </p>
           </div>
 
           <div class="input-group">
@@ -146,14 +150,14 @@
                       <div class="v-spec-item">
                         <span class="label">株間</span>
                         <span class="value"
-                          ><th:block th:text="${v.unitWidth}"></th:block
+                          ><th:block th:text="${v.unitHeight}"></th:block
                           ><small>cm</small></span
                         >
                       </div>
                       <div class="v-spec-item">
                         <span class="label">条間</span>
                         <span class="value"
-                          ><th:block th:text="${v.unitHeight}"></th:block
+                          ><th:block th:text="${v.unitWidth}"></th:block
                           ><small>cm</small></span
                         >
                       </div>

@@ -12,51 +12,48 @@ import com.example.gardenapp.model.Ridge;
 
 @Service
 public class Planner {
+
+    /**
+     * 野菜の作付計画を実行する。
+     * 日当たりを考慮し、背の高い野菜から順に、北側（図の上側）の畝に配置する。
+     */
     public Farmland plan(List<PlantArea> plantAreaList, Farmland farmland) {
-        // 日当たりを考慮し、背の高い野菜を北側（Y座標の小さい畝）から優先配置するためのソート（背の高さ > 面積 > 奥行）
+
+        // 1. 野菜リストのソート
+        // 優先順位：草丈（降順） > 面積（降順） > 奥行（降順）
+        plantAreaList.sort(
+                Comparator.comparingInt((PlantArea pa) -> pa.getVegetable().getHeight())
+                        .thenComparingInt(pa -> pa.getWidth() * pa.getHeight())
+                        .thenComparingInt(PlantArea::getHeight)
+                        .reversed());
+
+        // 2. 畝のソート（北側＝Y座標が小さい順）
         List<Ridge> ridges = farmland.getRidgeList();
-        plantAreaList.sort(new Comparator<PlantArea>() {
-            @Override
-            public int compare(PlantArea a, PlantArea b) {
-                // 背の高い野菜を優先 (true が先)
-                if (a.getVegetable().getIsTall() != b.getVegetable().getIsTall()) {
-                    return a.getVegetable().getIsTall() ? -1 : 1;
-                }
-                // 面積の大きい順
-                int areaA = a.getWidth() * a.getHeight();
-                int areaB = b.getWidth() * b.getHeight();
-                if (areaB != areaA)
-                    return areaB - areaA;
-
-                // 奥行の大きい順
-                return b.getHeight() - a.getHeight();
-            }
-        });
-
-        // 畝のソート（北側＝Y座標が小さい順）
         ridges.sort(Comparator.comparingInt(Ridge::getY));
 
-        // 作付エリアを1つずつ最適な空きスペースに配置する
+        // 3. 配置シミュレーションの実行
         for (PlantArea area : plantAreaList) {
             Rectangle bestOverallSpace = null;
             Ridge bestOverallRidge = null;
             long minOverheadArea = Long.MAX_VALUE;
 
-            // すべての畝をループし、全畝でのベスト配置を探索する
             for (Ridge ridge : ridges) {
-                // 畝の中でのベスト候補を探す
+                // 畝の中の空きスペースから最適な場所を探す
                 Rectangle bestInRidge = ridge.findBestFitFreeSpace(area);
+
                 if (bestInRidge != null) {
-                    // 背の高い野菜の場合、最初に見つかった（＝より北にある）畝に配置してループを抜ける
-                    if (area.getVegetable().getIsTall()) {
+                    // 【実益ロジック】草丈が100cm以上の高い野菜は、
+                    // 面積効率よりも「より北側の畝であること」を最優先して即座に確定
+                    if (area.getVegetable().getHeight() >= 100) {
                         bestOverallSpace = bestInRidge;
                         bestOverallRidge = ridge;
                         break;
                     }
-                    // 畝の中でのベスト候補があれば、その余剰面積を計算
+
+                    // それ以外の野菜は、最も「余白（Overhead）」が少なくなる効率的な畝を選択
                     long overhead = (long) bestInRidge.getWidth() * bestInRidge.getHeight()
                             - (long) area.getWidth() * area.getHeight();
-                    // これまでの畝の中でのベストよりも余剰面積が小さいならその畝と空きスペースをキープ
+
                     if (overhead < minOverheadArea) {
                         minOverheadArea = overhead;
                         bestOverallSpace = bestInRidge;
@@ -64,14 +61,18 @@ public class Planner {
                     }
                 }
             }
-            // 全畝の中で最も最適な場所に配置を確定させる
+
+            // 確定した場所に配置し、空きスペースを分割更新する
             if (bestOverallRidge != null && bestOverallSpace != null) {
                 bestOverallRidge.splitSpace(bestOverallSpace, area);
-                System.out.println(area.getVegetable().getName() + " を 畝ID:" + bestOverallRidge.getId() + " に配置しました。");
+                // 開発時確認用ログ
+                System.out.println(String.format("%s (高さ:%dcm) を 畝:%s に配置",
+                        area.getVegetable().getName(), area.getVegetable().getHeight(), bestOverallRidge.getName()));
             } else {
-                System.out.println(area.getVegetable().getName() + " はどの畝にも入りませんでした。");
+                System.out.println(area.getVegetable().getName() + " は配置可能なスペースがありませんでした。");
             }
         }
+
         return farmland;
     }
 }

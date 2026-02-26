@@ -17,5 +17,5 @@ public class Vegetable {
     @NonNull
     private Integer unitHeight;
     @NonNull
-    private Boolean isTall;
+    private Integer height;
 }

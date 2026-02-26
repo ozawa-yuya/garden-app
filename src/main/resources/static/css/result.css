@@ -60,6 +60,57 @@ header h2 {
   max-width: 1200px; /* 広がりすぎないように最大幅を設定 */
 }
 
+/* 畑と方位記号をセットにするラッパー */
+.farmland-wrapper {
+  position: relative; /* 方位記号をこの要素を基準に配置するため */
+  display: inline-block; /* 畑の幅に合わせて要素が縮まるようにするため */
+  vertical-align: top;
+}
+
+/* 方位記号のコンテナ */
+.compass-container {
+  position: absolute;
+  top: 10px;
+  right: 12px; /* 畑のすぐ右側に配置 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* 「N」の文字 */
+.compass-n {
+  font-family: "Georgia", serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: -5px;
+}
+
+/* 矢印部分 */
+.compass-arrow {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 25px solid #d32f2f; /* 北を指す赤い針 */
+  position: relative;
+}
+
+.compass-arrow::after {
+  content: "";
+  position: absolute;
+  top: 25px;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 25px solid #555; /* 南を指す黒い針 */
+}
+
 /* 配置図のコンテナ（スクロール制御） */
 .layout-container {
   flex: 0 1 auto;
@@ -199,10 +250,11 @@ header h2 {
 }
 
 .v-name {
-  font-size: 18px; /* 22pxから少し小さく */
+  font-size: 18px;
   font-weight: 800;
   display: block;
   line-height: 1.2;
+  text-align: center;
   white-space: normal; /* 折り返しを許可 */
   word-break: break-all; /* 長い名前を無理やり折る */
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);

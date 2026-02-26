@@ -109,6 +109,25 @@ input[type="number"]:focus {
   font-size: 20px;
 }
 
+/* 入力ヒントのスタイル */
+.input-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #5d6d5e;
+  background-color: #f1f8e9;
+  padding: 8px 12px;
+  border-left: 4px solid #8bc34a; /* アクセントの左線 */
+  border-radius: 4px;
+}
+
+.input-hint::before {
+  content: "💡"; /* アイコンを擬似要素で追加 */
+  font-size: 1rem;
+}
+
 /* ボタン（結果画面の保存ボタンと共通のデザイン） */
 .start-button {
   width: 100%;

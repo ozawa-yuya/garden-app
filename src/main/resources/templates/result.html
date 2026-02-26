@@ -28,58 +28,64 @@
 
     <div class="result-main-content">
       <div class="layout-container">
-        <div
-          class="farmland"
-          th:style="'width:' + ${farmland.width * 2} + 'px; height:' + ${farmland.height * 2} + 'px;'"
-        >
+        <div class="farmland-wrapper">
+          <div class="compass-container">
+            <span class="compass-n">N</span>
+            <div class="compass-arrow"></div>
+          </div>
           <div
-            th:each="ridge : ${farmland.ridgeList}"
-            class="ridge"
-            th:style="'left:' + ${ridge.x * 2} + 'px;
+            class="farmland"
+            th:style="'width:' + ${farmland.width * 2} + 'px; height:' + ${farmland.height * 2} + 'px;'"
+          >
+            <div
+              th:each="ridge : ${farmland.ridgeList}"
+              class="ridge"
+              th:style="'left:' + ${ridge.x * 2} + 'px;
                        top:' + ${ridge.y * 2} + 'px;
                        width:' + ${ridge.width * 2} + 'px;
                        height:' + ${ridge.height * 2} + 'px;'"
-          >
-            <span class="ridge-label">
-              <span th:text="${ridge.name}">畝-1</span>
-              <small
-                class="dimension"
-                th:text="'(' + ${ridge.width} + 'cm × ' + ${ridge.height} + 'cm)'"
-              ></small>
-            </span>
+            >
+              <span class="ridge-label">
+                <span th:text="${ridge.name}">畝-1</span>
+                <small
+                  class="dimension"
+                  th:text="'(' + ${ridge.width} + 'cm × ' + ${ridge.height} + 'cm)'"
+                ></small>
+              </span>
 
-            <div
-              th:each="plant : ${ridge.plantAreaList}"
-              class="plant-area"
-              th:style="'left:' + ${(plant.x - ridge.x) * 2} + 'px;
+              <div
+                th:each="plant : ${ridge.plantAreaList}"
+                class="plant-area"
+                th:style="'left:' + ${(plant.x - ridge.x) * 2} + 'px;
                            top:' + ${(plant.y - ridge.y) * 2} + 'px;
                            width:' + ${plant.width * 2} + 'px;
                            height:' + ${plant.height * 2} + 'px;'"
-            >
-              <div class="plant-content">
-                <strong class="v-name" th:text="${plant.vegetable.name}"
-                  >ナス</strong
-                >
+              >
+                <div class="plant-content">
+                  <strong class="v-name" th:text="${plant.vegetable.name}"
+                    >ナス</strong
+                  >
 
-                <div class="v-details">
-                  <div class="detail-row">
-                    <span class="detail-label">数量:</span>
+                  <div class="v-details">
+                    <div class="detail-row">
+                      <span class="detail-label">数量:</span>
+                      <span
+                        class="v-quantity"
+                        th:text="${plant.quantity} + '株'"
+                      ></span>
+                    </div>
+                    <div class="detail-row">
+                      <span class="detail-label">配置:</span>
+                      <span
+                        class="v-quantity"
+                        th:text="${plant.rowsCount} + '条'"
+                      ></span>
+                    </div>
                     <span
-                      class="v-quantity"
-                      th:text="${plant.quantity} + '株'"
+                      class="v-total-size"
+                      th:text="'(' + ${plant.width} + '×' + ${plant.height} + 'cm)'"
                     ></span>
                   </div>
-                  <div class="detail-row">
-                    <span class="detail-label">配置:</span>
-                    <span
-                      class="v-quantity"
-                      th:text="${plant.rowsCount} + '条'"
-                    ></span>
-                  </div>
-                  <span
-                    class="v-total-size"
-                    th:text="'(' + ${plant.width} + '×' + ${plant.height} + 'cm)'"
-                  ></span>
                 </div>
               </div>
             </div>
