@@ -1,6 +1,9 @@
 package com.example.gardenapp.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -35,7 +38,7 @@ public class PlantArea extends Land {
         // 1条あたりの株数（切り上げ）
         int countPerRow = (int) Math.ceil((double) quantity / rowsCount);
         // エリア全体のサイズを計算してセット
-        this.setWidth(countPerRow * this.vegetable.getUnitWidth());
-        this.setHeight(rowsCount * this.vegetable.getUnitHeight());
+        this.setWidth(this.rowsCount * this.vegetable.getUnitWidth());
+        this.setHeight(countPerRow * this.vegetable.getUnitHeight());
     }
 }

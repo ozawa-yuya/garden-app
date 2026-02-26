@@ -63,9 +63,6 @@ public class MainController {
                     if (s.getQuantity() == null || s.getQuantity() < 1) {
                         bindingResult.rejectValue("selections[" + i + "].quantity", "error.quantity", "株数を入力してください");
                     }
-                    if (s.getRowsCount() == null || s.getRowsCount() < 1) {
-                        bindingResult.rejectValue("selections[" + i + "].rowsCount", "error.rowsCount", "条数を入力してください");
-                    }
                 }
             }
         }

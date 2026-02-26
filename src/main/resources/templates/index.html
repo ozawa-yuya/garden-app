@@ -58,7 +58,7 @@
           </div>
 
           <div class="input-group">
-            <label>外周の余白（cm）</label>
+            <label>外周（畑のフチ）の余白（cm）</label>
             <input
               type="number"
               th:field="*{farmlandOffset}"
@@ -78,24 +78,14 @@
           </div>
 
           <div class="input-group">
-            <label>畝のサイズ（cm）</label>
-            <div class="inline-inputs">
-              <input
-                type="number"
-                th:field="*{ridgeWidth}"
-                placeholder="幅"
-                min="1"
-                required
-              />
-              <span>×</span>
-              <input
-                type="number"
-                th:field="*{ridgeHeight}"
-                placeholder="奥行き"
-                min="1"
-                required
-              />
-            </div>
+            <label>畝幅（cm）</label>
+            <input
+              type="number"
+              th:field="*{ridgeWidth}"
+              placeholder="70"
+              min="1"
+              required
+            />
           </div>
 
           <div class="input-group">
@@ -184,18 +174,6 @@
                     />
                     <span>株</span>
                   </div>
-                  <div class="input-row">
-                    <label>条数</label>
-                    <input
-                      type="number"
-                      th:id="'rows-' + ${stat.index}"
-                      th:name="|selections[${stat.index}].rowsCount|"
-                      placeholder="0"
-                      min="1"
-                      disabled
-                    />
-                    <span>条</span>
-                  </div>
                 </div>
 
                 <div
@@ -222,21 +200,17 @@
       function toggleInputs(checkbox, index, vegetableId) {
         const idInput = document.getElementById("hidden-id-" + index);
         const qtyInput = document.getElementById("qty-" + index);
-        const rowsInput = document.getElementById("rows-" + index);
 
         if (checkbox.checked) {
           // チェック時：IDをセットし、数値入力を有効化
           idInput.value = vegetableId;
           qtyInput.disabled = false;
-          rowsInput.disabled = false;
           qtyInput.focus(); // 入力しやすくするためにフォーカス
         } else {
           // 解除時：IDをクリアし、数値入力を無効化（送信されないようにする）
           idInput.value = "";
           qtyInput.disabled = true;
-          rowsInput.disabled = true;
           qtyInput.value = "";
-          rowsInput.value = "";
         }
       }
     </script>

@@ -31,7 +31,9 @@ public class FarmlandService {
                 0, 0,
                 form.getRidgeGap(),
                 form.getFarmlandOffset());
-        farmland.generateRidges(form.getRidgeWidth(), form.getRidgeHeight());
+        // 畝の奥行き = 農地の奥行き - (上下の余白 * 2) を自動算出
+        int calculatedRidgeHeight = form.getFarmlandHeight() - (form.getFarmlandOffset() * 2);
+        farmland.generateRidges(form.getRidgeWidth(), calculatedRidgeHeight);
         return farmland;
     }
 

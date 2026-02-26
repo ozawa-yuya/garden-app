@@ -124,16 +124,26 @@ header h2 {
   text-align: center;
 }
 
-/* スマホ対応：画面が狭いときは縦に並べる */
+/* 画面が狭いときは縦に並べる */
 @media (max-width: 1024px) {
   .result-main-content {
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
+
+  .layout-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 40px 10px;
+    box-sizing: border-box;
+  }
+
   .side-planting-guide {
     width: 100%;
     max-width: 500px;
     position: static;
+    margin-top: 20px;
   }
 }
 
@@ -154,58 +164,82 @@ header h2 {
 .ridge-label {
   position: absolute;
   top: -35px;
-  left: 8px;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #5d4037;
-  color: #ffffff;
+  color: white;
   padding: 4px 14px;
   font-size: 14px;
   font-weight: bold;
   border-radius: 20px;
   display: inline-block;
+  white-space: nowrap;
+  z-index: 10;
 }
 
 .plant-area {
   position: absolute;
-  background-color: #529255;
+  color: #ffffff;
+  background-color: #449c49; /* 少し濃い緑にして白文字を見やすく */
   border-radius: 8px;
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  color: white;
-  overflow: hidden;
   padding: 4px;
+  overflow: hidden; /* 万が一のはみ出しを隠す */
 }
 
-.v-name {
-  font-size: 22px;
-  font-weight: 800;
-  display: block;
-  margin-bottom: 2px;
-  white-space: nowrap;
-}
-
-.v-details {
-  font-size: 10px;
+.plant-content {
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* 常に縦並びにする */
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   width: 100%;
 }
 
+.v-name {
+  font-size: 18px; /* 22pxから少し小さく */
+  font-weight: 800;
+  display: block;
+  line-height: 1.2;
+  white-space: normal; /* 折り返しを許可 */
+  word-break: break-all; /* 長い名前を無理やり折る */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 4px;
+  width: 90%;
+}
+
+.v-details {
+  display: flex;
+  flex-direction: column; /* 縦並びに変更 */
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.detail-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 9px;
+  opacity: 0.8;
+  font-weight: normal;
+}
+
 .v-quantity {
-  font-size: 16px;
-  font-weight: 600;
-  white-space: nowrap;
+  font-size: 15px; /* 16pxから微調整 */
+  font-weight: 700;
+  font-family: "Courier New", Courier, monospace; /* 数値を際立たせる */
 }
 
 .v-total-size {
-  font-size: 16px;
-  font-weight: 500;
-  white-space: nowrap;
+  font-size: 10px; /* サイズは補足程度に */
+  opacity: 0.7;
+  margin-top: 4px;
 }
 
 .dimension {

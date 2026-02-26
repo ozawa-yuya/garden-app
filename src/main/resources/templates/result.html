@@ -58,18 +58,24 @@
             >
               <div class="plant-content">
                 <strong class="v-name" th:text="${plant.vegetable.name}"
-                  >野菜名</strong
+                  >ナス</strong
                 >
 
                 <div class="v-details">
-                  <span
-                    class="v-quantity"
-                    th:text="${plant.quantity} + '株 / '"
-                  ></span>
-                  <span
-                    class="v-quantity"
-                    th:text="${plant.rowsCount} + '条'"
-                  ></span>
+                  <div class="detail-row">
+                    <span class="detail-label">数量:</span>
+                    <span
+                      class="v-quantity"
+                      th:text="${plant.quantity} + '株'"
+                    ></span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">配置:</span>
+                    <span
+                      class="v-quantity"
+                      th:text="${plant.rowsCount} + '条'"
+                    ></span>
+                  </div>
                   <span
                     class="v-total-size"
                     th:text="'(' + ${plant.width} + '×' + ${plant.height} + 'cm)'"
@@ -99,13 +105,13 @@
                 </td>
                 <td
                   class="dim-cell"
-                  th:text="${plant.vegetable.unitWidth} + 'cm'"
+                  th:text="${plant.vegetable.unitHeight} + 'cm'"
                 >
                   30cm
                 </td>
                 <td
                   class="dim-cell"
-                  th:text="${plant.vegetable.unitHeight} + 'cm'"
+                  th:text="${plant.vegetable.unitWidth} + 'cm'"
                 >
                   40cm
                 </td>
