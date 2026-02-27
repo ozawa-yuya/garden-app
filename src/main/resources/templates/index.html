@@ -127,13 +127,14 @@
                   th:id="'v-' + ${stat.index}"
                   class="v-checkbox"
                   th:onchange="|toggleInputs(this, ${stat.index}, ${v.id})|"
+                  th:checked="${inputForm.selections[stat.index].vegetableId != null}"
                 />
 
                 <input
                   type="hidden"
                   th:id="'hidden-id-' + ${stat.index}"
                   th:name="|selections[${stat.index}].vegetableId|"
-                  value=""
+                  th:value="${inputForm.selections[stat.index].vegetableId}"
                 />
 
                 <label th:for="'v-' + ${stat.index}" class="v-card-label">
@@ -172,9 +173,10 @@
                       type="number"
                       th:id="'qty-' + ${stat.index}"
                       th:name="|selections[${stat.index}].quantity|"
+                      th:value="${inputForm.selections[stat.index].quantity}"
                       placeholder="0"
                       min="1"
-                      disabled
+                      th:disabled="${inputForm.selections[stat.index].vegetableId == null}"
                     />
                     <span>株</span>
                   </div>
@@ -195,7 +197,10 @@
             </div>
           </div>
 
-          <button type="submit" class="start-button">配置を計算する</button>
+          <div class="button-group">
+            <button type="submit" class="start-button">配置を計算する</button>
+            <a th:href="@{/reset}" class="reset-link">すべてクリア</a>
+          </div>
         </form>
       </main>
     </div>

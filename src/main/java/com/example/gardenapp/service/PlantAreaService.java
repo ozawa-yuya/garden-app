@@ -23,6 +23,9 @@ public class PlantAreaService {
         int maxRidgeHeight = form.getFarmlandHeight() - (form.getFarmlandOffset() * 2);
 
         for (VegetableSelection s : form.getSelections()) {
+            if (s.getVegetableId() == null) {
+                continue; // IDがない行（未選択行）は計算せず次の行へ
+            }
             Vegetable v = vegetableMapper.findById(s.getVegetableId());
 
             // --- 条数の自動計算ロジック ---

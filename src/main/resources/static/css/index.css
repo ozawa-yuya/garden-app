@@ -128,11 +128,21 @@ input[type="number"]:focus {
   font-size: 1rem;
 }
 
-/* ボタン（結果画面の保存ボタンと共通のデザイン） */
+/* ボタンを包むグループ */
+.button-group {
+  display: flex;
+  flex-direction: column; /* 基本は縦並び */
+  align-items: center; /* 中央寄せ */
+  gap: 15px; /* ボタンとリンクの間隔 */
+  margin-top: 30px;
+}
+
+/* メインボタン */
 .start-button {
   width: 100%;
-  font-size: 22px;
-  padding: 18px;
+  max-width: 400px;
+  font-size: 20px;
+  padding: 16px;
   background-color: #fb8c00;
   color: white;
   border: none;
@@ -141,12 +151,38 @@ input[type="number"]:focus {
   font-weight: bold;
   box-shadow: 0 4px 0 #e65100;
   transition: all 0.2s;
-  margin-top: 20px;
+}
+
+.start-button:hover {
+  background-color: #ffa726; /* ホバー時に少し明るく */
 }
 
 .start-button:active {
   transform: translateY(2px);
   box-shadow: 0 2px 0 #e65100;
+}
+
+/* リセットリンクを「控えめなボタン」風 */
+.reset-link {
+  text-decoration: none;
+  color: #777;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.reset-link::before {
+  content: "↺"; /* リセットを想起させるアイコン */
+  font-size: 1.1rem;
+}
+
+.reset-link:hover {
+  color: #d32f2f;
+  background-color: #ffebee;
 }
 
 #selection-area {

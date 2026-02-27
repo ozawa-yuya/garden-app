@@ -50,14 +50,54 @@ header h2 {
   font-weight: normal;
 }
 
-/* 全体を横並びにするコンテナ */
+/* ページ全体の中央寄せと幅制限 */
+.result-page-wrapper {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px; /* 画面端の余白 */
+}
+
+/* 警告文 */
+.unplaced-warning {
+  display: flex;
+  gap: 15px;
+  background-color: #fff4e5;
+  border: 1px solid #ffa726;
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 25px; /* 下のコンテンツとの間隔 */
+  color: #663c00;
+  width: 100%; /* 親要素に対して100% */
+  box-sizing: border-box;
+}
+
+.warning-icon {
+  font-size: 1.5rem;
+  margin-top: 3px;
+}
+
+.warning-content p {
+  margin: 0 0 5px 0;
+}
+
+.warning-content ul {
+  margin: 5px 0;
+  padding-left: 20px;
+  font-weight: bold;
+}
+
+.warning-hint {
+  font-size: 0.85rem;
+  margin-top: 10px !important;
+  opacity: 0.8;
+}
+
+/* 横並びコンテナ */
 .result-main-content {
   display: flex;
-  gap: 20px; /* レイアウトと表の間隔 */
+  gap: 30px;
   justify-content: center;
   align-items: flex-start;
-  margin: 40px auto; /* 画面全体に対しても中央に配置 */
-  max-width: 1200px; /* 広がりすぎないように最大幅を設定 */
 }
 
 /* 畑と方位記号をセットにするラッパー */
@@ -70,7 +110,7 @@ header h2 {
 /* 方位記号のコンテナ */
 .compass-container {
   position: absolute;
-  top: 10px;
+  top: 40px;
   right: 12px; /* 畑のすぐ右側に配置 */
   display: flex;
   flex-direction: column;
@@ -119,7 +159,7 @@ header h2 {
 
 /* サイドガイドのスタイル */
 .side-planting-guide {
-  width: 280px; /* 幅を固定してスッキリさせる */
+  width: 380px; /* 幅を固定してスッキリさせる */
   background: #ffffff;
   padding: 20px;
   border-radius: 15px;

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.gardenapp.form.InputForm;
 import com.example.gardenapp.model.Farmland;
+import com.example.gardenapp.model.PlanningResult;
 import com.example.gardenapp.model.PlantArea;
 import com.example.gardenapp.model.Vegetable;
 import com.example.gardenapp.model.VegetableSelection;
@@ -39,15 +40,25 @@ public class MainController {
     }
 
     @GetMapping({ "/", "/index" })
-    public String inputView(InputForm inputForm) {
-        // リストが空（初回アクセス時）なら、10行分のインスタンスを作成してセットする
-        if (inputForm.getSelections() == null || inputForm.getSelections().isEmpty()) {
-            List<VegetableSelection> selections = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                selections.add(new VegetableSelection());
-            }
-            inputForm.setSelections(selections);
+    public String inputView(Model model, HttpSession httpSession) {
+        InputForm inputForm = (InputForm) httpSession.getAttribute("inputForm");
+        List<Vegetable> vegetableList = vegetableService.getVegetableList();
+
+        if (inputForm == null) {
+            inputForm = new InputForm();
+            inputForm.setSelections(new ArrayList<>());
         }
+
+        List<VegetableSelection> selections = inputForm.getSelections();
+        if (selections == null) {
+            selections = new ArrayList<>();
+        }
+        while (selections.size() < vegetableList.size()) {
+            selections.add(new VegetableSelection());
+        }
+        inputForm.setSelections(selections);
+
+        model.addAttribute("inputForm", inputForm);
         return "index";
     }
 
@@ -71,13 +82,14 @@ public class MainController {
             return "index";
         }
 
-        // エラーがない場合のみ、空行を除去して result 画面へ
-        inputForm.getSelections().removeIf(s -> s.getVegetableId() == null);
+        httpSession.setAttribute("inputForm", inputForm);
         // inputFormデータを処理
         List<PlantArea> plantAreaList = plantAreaService.creatPlantAreaList(inputForm);
         Farmland farmland = farmlandService.generateRidge(inputForm);
-        Farmland calculatedFarmland = planner.plan(plantAreaList, farmland);
+        PlanningResult planningResult = planner.plan(plantAreaList, farmland);
+        Farmland calculatedFarmland = planningResult.getFarmland();
         model.addAttribute("farmland", calculatedFarmland);
+        model.addAttribute("unplacedVegetables", planningResult.getUnplacedVegetables());
         httpSession.setAttribute("farmland", calculatedFarmland);
 
         return "result";
@@ -91,6 +103,13 @@ public class MainController {
             httpSession.removeAttribute("farmland");
         }
         redirectAttributes.addFlashAttribute("msg", "結果を保存しました");
+        return "redirect:/";
+    }
+
+    @GetMapping("/reset")
+    public String reset(HttpSession httpSession) {
+        httpSession.removeAttribute("inputForm");
+        httpSession.removeAttribute("farmland");
         return "redirect:/";
     }
 }
