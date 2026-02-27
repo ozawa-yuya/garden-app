@@ -1,3 +1,20 @@
+/* ==========================================================================
+   1. 変数とベーススタイル
+   ========================================================================== */
+:root {
+  --bg-color: #f9f7f2;
+  --text-main: #443a36;
+  --text-sub: #8d6e63;
+  --accent-color: #fb8c00;
+  --accent-hover: #ffa726;
+  --accent-shadow: #e65100;
+  --card-bg: #ffffff;
+  --soil-color: #a1887f;
+  --ridge-color: #d7ccc8;
+  --plant-green: #449c49;
+  --border-radius: 12px;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,16 +22,17 @@
 }
 
 body {
-  background-color: #f9f7f2;
+  background-color: var(--bg-color);
   font-family:
     "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-  padding: 40px;
-  color: #443a36;
+  padding: 40px 20px;
+  color: var(--text-main);
+  line-height: 1.6;
 }
 
 header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 header h2 {
@@ -22,6 +40,9 @@ header h2 {
   letter-spacing: 1px;
 }
 
+/* ==========================================================================
+   2. サマリー情報（上部）
+   ========================================================================== */
 .total-info {
   display: flex;
   justify-content: center;
@@ -31,33 +52,58 @@ header h2 {
 }
 
 .info-item {
-  background-color: #ffffff;
+  background-color: var(--card-bg);
   padding: 8px 20px;
   border-radius: 50px;
   border: 2px solid #d7ccc8;
   color: #5d4037;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .info-label {
-  font-size: 13px;
-  color: #8d6e63;
+  font-size: 12px;
+  color: var(--text-sub);
   margin-right: 8px;
   font-weight: normal;
 }
 
-/* ページ全体の中央寄せと幅制限 */
+/* ==========================================================================
+   3. 全体レイアウト構造（スクロール制御の核）
+   ========================================================================== */
 .result-page-wrapper {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px; /* 画面端の余白 */
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* 警告文 */
+.result-main-content {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* 図面部分のスクロール制御 */
+.layout-container {
+  flex: 1; /* 残りの幅をすべて占有 */
+  min-width: 0; /* flexアイテムの縮小を許可 */
+  overflow-x: auto; /* はみ出したらスクロールバーを出す */
+  background: rgba(255, 255, 255, 0.3); /* 図面範囲を微かに強調 */
+  border-radius: var(--border-radius);
+  scrollbar-width: thin; /* スクロールバーをスリムに */
+}
+
+/* ==========================================================================
+   4. 警告文
+   ========================================================================== */
 .unplaced-warning {
   display: flex;
   gap: 15px;
@@ -65,107 +111,145 @@ header h2 {
   border: 1px solid #ffa726;
   border-radius: 8px;
   padding: 15px 20px;
-  margin-bottom: 25px; /* 下のコンテンツとの間隔 */
+  margin-bottom: 25px;
   color: #663c00;
-  width: 100%; /* 親要素に対して100% */
-  box-sizing: border-box;
+  width: 100%;
 }
 
 .warning-icon {
   font-size: 1.5rem;
-  margin-top: 3px;
 }
-
-.warning-content p {
-  margin: 0 0 5px 0;
-}
-
 .warning-content ul {
-  margin: 5px 0;
   padding-left: 20px;
   font-weight: bold;
 }
-
 .warning-hint {
   font-size: 0.85rem;
-  margin-top: 10px !important;
   opacity: 0.8;
+  margin-top: 8px !important;
 }
 
-/* 横並びコンテナ */
-.result-main-content {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-/* 畑と方位記号をセットにするラッパー */
+/* ==========================================================================
+   5. 配置図（畑・畝・野菜）
+   ========================================================================== */
 .farmland-wrapper {
-  position: relative; /* 方位記号をこの要素を基準に配置するため */
-  display: inline-block; /* 畑の幅に合わせて要素が縮まるようにするため */
+  position: relative;
+  display: inline-block;
   vertical-align: top;
+  margin-bottom: 20px;
 }
 
-/* 方位記号のコンテナ */
-.compass-container {
+.farmland {
+  position: relative;
+  background-color: var(--soil-color);
+  border-radius: 20px;
+  border: 3px solid var(--text-sub);
+}
+
+.ridge {
   position: absolute;
-  top: 40px;
-  right: 12px; /* 畑のすぐ右側に配置 */
+  background-color: var(--ridge-color);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.ridge-label {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #5d4037;
+  color: white;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 10px;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.plant-area {
+  position: absolute;
+  background-color: var(--plant-green);
+  color: white;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  padding: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 30;
-  pointer-events: none;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.v-name {
+  font-size: 16px;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 4px;
+  padding-bottom: 2px;
+  width: 90%;
+  text-align: center;
+}
+
+.v-details {
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ==========================================================================
+   6. 方位磁石
+   ========================================================================== */
+.compass-container {
+  position: absolute;
+  top: 15px; /* 図面の端に寄せる */
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 20;
   opacity: 0.7;
+  pointer-events: none;
 }
 
-/* 「N」の文字 */
 .compass-n {
-  font-family: "Georgia", serif;
+  font-family: serif;
   font-weight: bold;
-  font-size: 1.2rem;
   color: #333;
-  margin-bottom: -5px;
 }
-
-/* 矢印部分 */
 .compass-arrow {
   width: 0;
   height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 25px solid #d32f2f; /* 北を指す赤い針 */
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 20px solid #d32f2f;
   position: relative;
 }
-
 .compass-arrow::after {
   content: "";
   position: absolute;
-  top: 25px;
-  left: -8px;
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 25px solid #555; /* 南を指す黒い針 */
+  top: 20px;
+  left: -7px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 20px solid #555;
 }
 
-/* 配置図のコンテナ（スクロール制御） */
-.layout-container {
-  flex: 0 1 auto;
-  overflow-x: auto;
-}
-
-/* サイドガイドのスタイル */
+/* ==========================================================================
+   7. サイドガイド（定植間隔表）
+   ========================================================================== */
 .side-planting-guide {
-  width: 380px; /* 幅を固定してスッキリさせる */
-  background: #ffffff;
+  width: 280px;
+  background: var(--card-bg);
   padding: 20px;
   border-radius: 15px;
-  border: 3px solid #8d6e63;
+  border: 3px solid var(--text-sub);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  position: sticky; /* スクロールしてもついてくるように設定 */
+  position: sticky;
   top: 20px;
 }
 
@@ -184,16 +268,15 @@ header h2 {
 }
 
 .mini-specs-table th {
-  font-size: 12px;
-  color: #8d6e63;
-  padding: 8px;
-  border-bottom: 2px solid #f0ede9;
+  font-size: 11px;
+  color: var(--text-sub);
+  padding-bottom: 8px;
 }
 
 .mini-specs-table td {
-  padding: 10px 5px;
+  padding: 8px 4px;
   border-bottom: 1px solid #f0ede9;
-  font-size: 14px;
+  font-size: 13px;
   text-align: center;
 }
 
@@ -203,170 +286,73 @@ header h2 {
   color: #5d4037;
 }
 
-.dim-cell {
-  font-family: "Courier New", Courier, monospace; /* 数値を読みやすく */
+/* ==========================================================================
+   8. アクションボタン
+   ========================================================================== */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin: 40px 0;
+}
+
+.actions form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+}
+
+.save-button {
+  width: 100%;
+  padding: 16px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 20px;
   font-weight: bold;
+  box-shadow: 0 4px 0 var(--accent-shadow);
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.guide-note {
-  font-size: 11px;
-  color: #8d6e63;
-  margin-top: 15px;
-  text-align: center;
+.save-button:hover {
+  background-color: var(--accent-hover);
+}
+.save-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--accent-shadow);
 }
 
-/* 画面が狭いときは縦に並べる */
+.back-link {
+  text-decoration: none;
+  color: #777;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #d32f2f;
+}
+
+/* ==========================================================================
+   9. レスポンシブ対応
+   ========================================================================== */
 @media (max-width: 1024px) {
   .result-main-content {
     flex-direction: column;
     align-items: center;
-    width: 100%;
   }
-
   .layout-container {
     width: 100%;
-    max-width: 100%;
-    padding: 40px 10px;
-    box-sizing: border-box;
   }
-
   .side-planting-guide {
     width: 100%;
     max-width: 500px;
     position: static;
-    margin-top: 20px;
   }
-}
-
-.farmland {
-  position: relative;
-  background-color: #a1887f;
-  border-radius: 20px;
-  border: 4px solid #8d6e63;
-}
-
-.ridge {
-  position: absolute;
-  background-color: #d7ccc8;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.ridge-label {
-  position: absolute;
-  top: -35px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #5d4037;
-  color: white;
-  padding: 4px 14px;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 20px;
-  display: inline-block;
-  white-space: nowrap;
-  z-index: 10;
-}
-
-.plant-area {
-  position: absolute;
-  color: #ffffff;
-  background-color: #449c49; /* 少し濃い緑にして白文字を見やすく */
-  border-radius: 8px;
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 4px;
-  overflow: hidden; /* 万が一のはみ出しを隠す */
-}
-
-.plant-content {
-  display: flex;
-  flex-direction: column; /* 常に縦並びにする */
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-}
-
-.v-name {
-  font-size: 18px;
-  font-weight: 800;
-  display: block;
-  line-height: 1.2;
-  text-align: center;
-  white-space: normal; /* 折り返しを許可 */
-  word-break: break-all; /* 長い名前を無理やり折る */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  padding-bottom: 4px;
-  width: 90%;
-}
-
-.v-details {
-  display: flex;
-  flex-direction: column; /* 縦並びに変更 */
-  align-items: center;
-  gap: 4px;
-  width: 100%;
-}
-
-.detail-row {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-}
-
-.detail-label {
-  font-size: 9px;
-  opacity: 0.8;
-  font-weight: normal;
-}
-
-.v-quantity {
-  font-size: 15px; /* 16pxから微調整 */
-  font-weight: 700;
-  font-family: "Courier New", Courier, monospace; /* 数値を際立たせる */
-}
-
-.v-total-size {
-  font-size: 10px; /* サイズは補足程度に */
-  opacity: 0.7;
-  margin-top: 4px;
-}
-
-.dimension {
-  font-weight: normal;
-  margin-left: 5px;
-}
-
-.actions {
-  margin-top: 60px;
-  text-align: center;
-}
-
-.save-button {
-  font-size: 20px;
-  padding: 18px 50px;
-  background-color: #fb8c00;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 4px 0 #e65100;
-  transition: all 0.2s;
-}
-
-.save-button:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #e65100;
-}
-
-.back-link {
-  display: inline-block;
-  margin-top: 25px;
-  color: #8d6e63;
-  text-decoration: none;
-  font-weight: bold;
-  border-bottom: 1px solid #8d6e63;
 }

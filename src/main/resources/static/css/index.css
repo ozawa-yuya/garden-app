@@ -1,4 +1,31 @@
-/* 全体設定 */
+/* ==========================================================================
+   1. 変数定義
+   ========================================================================== */
+:root {
+  /* メインカラー */
+  --bg-color: #f9f7f2;
+  --text-main: #443a36;
+  --text-sub: #8d6e63;
+  --accent-color: #fb8c00;
+  --accent-hover: #ffa726;
+  --accent-shadow: #e65100;
+
+  /* ブランドカラー */
+  --primary-green: #2e7d32;
+  --primary-light: #e8f5e9;
+  --border-color: #d7ccc8;
+
+  /* カード・フォーム関連 */
+  --card-bg: #ffffff;
+  --border-radius-lg: 25px;
+  --border-radius-md: 15px;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 15px rgba(46, 125, 50, 0.1);
+}
+
+/* ==========================================================================
+   2. ベーススタイル
+   ========================================================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,10 +33,10 @@
 }
 
 body {
-  background-color: #f9f7f2;
+  background-color: var(--bg-color);
   font-family:
     "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-  color: #443a36;
+  color: var(--text-main);
   line-height: 1.6;
 }
 
@@ -19,7 +46,9 @@ body {
   padding: 40px 20px;
 }
 
-/* ヒーローセクション */
+/* ==========================================================================
+   3. ヒーローセクション
+   ========================================================================== */
 .hero {
   text-align: center;
   margin-bottom: 40px;
@@ -27,24 +56,27 @@ body {
 
 .hero h1 {
   font-size: 32px;
-  color: #2e7d32;
+  color: var(--primary-green);
   margin-bottom: 10px;
 }
 
 .hero p {
   font-size: 18px;
-  color: #8d6e63;
+  color: var(--text-sub);
 }
 
-/* ガイドセクション */
+/* ==========================================================================
+   4. ガイドセクション
+   ========================================================================== */
 .guide {
   display: flex;
   justify-content: space-around;
   margin-bottom: 40px;
-  background: #ffffff;
+  background: var(--card-bg);
   padding: 20px;
   border-radius: 20px;
   border: 2px solid #e0e0e0;
+  box-shadow: var(--shadow-sm);
 }
 
 .step {
@@ -52,7 +84,7 @@ body {
 }
 
 .step-num {
-  background: #8d6e63;
+  background: var(--text-sub);
   color: white;
   width: 30px;
   height: 30px;
@@ -63,12 +95,15 @@ body {
   margin-bottom: 8px;
 }
 
-/* フォームカード */
+/* ==========================================================================
+   5. フォームカード（農地設定）
+   ========================================================================== */
 .form-card {
-  background: white;
+  background: var(--card-bg);
   padding: 40px;
-  border-radius: 25px;
-  border: 4px solid #8d6e63; /* 結果画面の農地枠線と統一 */
+  border-radius: var(--border-radius-lg);
+  border: 4px solid var(--text-sub);
+  box-shadow: var(--shadow-md);
 }
 
 .input-group {
@@ -83,19 +118,18 @@ body {
   color: #5d4037;
 }
 
-/* 入力ボックスをモダンに */
 input[type="number"] {
   width: 100%;
   padding: 12px 15px;
   font-size: 18px;
-  border: 2px solid #d7ccc8;
+  border: 2px solid var(--border-color);
   border-radius: 10px;
   transition: border-color 0.3s;
 }
 
 input[type="number"]:focus {
   outline: none;
-  border-color: #2e7d32;
+  border-color: var(--primary-green);
 }
 
 .inline-inputs {
@@ -109,7 +143,7 @@ input[type="number"]:focus {
   font-size: 20px;
 }
 
-/* 入力ヒントのスタイル */
+/* 入力ヒント */
 .input-hint {
   display: flex;
   align-items: center;
@@ -119,72 +153,18 @@ input[type="number"]:focus {
   color: #5d6d5e;
   background-color: #f1f8e9;
   padding: 8px 12px;
-  border-left: 4px solid #8bc34a; /* アクセントの左線 */
+  border-left: 4px solid #8bc34a;
   border-radius: 4px;
 }
 
 .input-hint::before {
-  content: "💡"; /* アイコンを擬似要素で追加 */
+  content: "💡";
   font-size: 1rem;
 }
 
-/* ボタンを包むグループ */
-.button-group {
-  display: flex;
-  flex-direction: column; /* 基本は縦並び */
-  align-items: center; /* 中央寄せ */
-  gap: 15px; /* ボタンとリンクの間隔 */
-  margin-top: 30px;
-}
-
-/* メインボタン */
-.start-button {
-  width: 100%;
-  max-width: 400px;
-  font-size: 20px;
-  padding: 16px;
-  background-color: #fb8c00;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 4px 0 #e65100;
-  transition: all 0.2s;
-}
-
-.start-button:hover {
-  background-color: #ffa726; /* ホバー時に少し明るく */
-}
-
-.start-button:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #e65100;
-}
-
-/* リセットリンクを「控えめなボタン」風 */
-.reset-link {
-  text-decoration: none;
-  color: #777;
-  font-size: 0.95rem;
-  padding: 8px 16px;
-  border-radius: 4px;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.reset-link::before {
-  content: "↺"; /* リセットを想起させるアイコン */
-  font-size: 1.1rem;
-}
-
-.reset-link:hover {
-  color: #d32f2f;
-  background-color: #ffebee;
-}
-
+/* ==========================================================================
+   6. 野菜選択セクション
+   ========================================================================== */
 #selection-area {
   margin-top: 40px;
 }
@@ -193,11 +173,10 @@ input[type="number"]:focus {
   font-size: 20px;
   color: #5d4037;
   margin-bottom: 20px;
-  border-left: 5px solid #2e7d32;
+  border-left: 5px solid var(--primary-green);
   padding-left: 15px;
 }
 
-/* 野菜グリッド */
 .vegetable-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -205,16 +184,15 @@ input[type="number"]:focus {
   margin-top: 20px;
 }
 
-/* 隠しチェックボックス */
 .v-checkbox {
   display: none;
 }
 
-/* カードのデザイン */
+/* カードデザイン */
 .v-card-label {
   display: block;
   cursor: pointer;
-  background: #ffffff;
+  background: var(--card-bg);
   border: 3px solid #e0e0e0;
   border-radius: 20px;
   padding: 20px 10px;
@@ -232,12 +210,13 @@ input[type="number"]:focus {
   display: block;
   font-size: 18px;
   color: #5d4037;
+  font-weight: bold;
 }
 
 .v-unit-info-box {
   margin-top: 10px;
   padding-top: 8px;
-  border-top: 1px dashed #d7ccc8; /* 区切り線を入れて数値を目立たせる */
+  border-top: 1px dashed var(--border-color);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -251,15 +230,15 @@ input[type="number"]:focus {
 }
 
 .v-spec-item .label {
-  font-size: 12px;
-  color: #8d6e63;
+  font-size: 11px;
+  color: var(--text-sub);
   font-weight: bold;
 }
 
 .v-spec-item .value {
-  font-size: 16px; /* 文字を大きく設定 */
+  font-size: 16px;
   font-weight: 800;
-  color: #443a36;
+  color: var(--text-main);
 }
 
 .v-spec-item .value small {
@@ -268,27 +247,27 @@ input[type="number"]:focus {
   font-weight: normal;
 }
 
-/* チェックされた時の変化 */
+/* チェック時のステート */
 .v-checkbox:checked + .v-card-label {
-  border-color: #2e7d32;
-  background-color: #e8f5e9;
+  border-color: var(--primary-green);
+  background-color: var(--primary-light);
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(46, 125, 50, 0.2);
+  box-shadow: var(--shadow-md);
 }
 
-/* 入力エリア（通常は隠す、チェックされたら出す） */
+/* 入力オーバーレイ（株数・条数） */
 .v-inputs-overlay {
   display: none;
   margin-top: 10px;
-  background: #ffffff;
-  border: 2px solid #2e7d32;
-  border-radius: 15px;
+  background: var(--card-bg);
+  border: 2px solid var(--primary-green);
+  border-radius: var(--border-radius-md);
   padding: 10px;
 }
 
 .v-checkbox:checked ~ .v-inputs-overlay {
   display: block;
-  animation: fadeIn 0.3s;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .input-row {
@@ -306,27 +285,71 @@ input[type="number"]:focus {
 .input-row input {
   width: 50px;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   text-align: center;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ==========================================================================
+   7. ボタン・メッセージ
+   ========================================================================== */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
 }
 
-/* 保存完了メッセージ */
+.start-button {
+  width: 100%;
+  max-width: 400px;
+  font-size: 20px;
+  padding: 16px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 0 var(--accent-shadow);
+  transition: all 0.2s;
+}
+
+.start-button:hover {
+  background-color: var(--accent-hover);
+}
+.start-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--accent-shadow);
+}
+
+.reset-link {
+  text-decoration: none;
+  color: #777;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.reset-link::before {
+  content: "↺";
+  font-size: 1.1rem;
+}
+.reset-link:hover {
+  color: #d32f2f;
+  background-color: #ffebee;
+}
+
+/* メッセージ・エラー */
 .success-message {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-  border: 2px solid #2e7d32;
+  background-color: var(--primary-light);
+  color: var(--primary-green);
+  border: 2px solid var(--primary-green);
   border-radius: 10px;
   padding: 15px;
   text-align: center;
@@ -334,7 +357,6 @@ input[type="number"]:focus {
   font-weight: bold;
 }
 
-/* 共通エラー表示（畑サイズなど） */
 .error-summary {
   list-style: none;
   background: #fff5f5;
@@ -346,14 +368,23 @@ input[type="number"]:focus {
   font-weight: bold;
 }
 
-/* カード内の小さなエラー表示 */
 .error-container-mini {
   margin-top: 5px;
   font-size: 11px;
   text-align: center;
   color: #d32f2f;
 }
-.error-container-mini ul {
-  list-style: none;
-  padding: 0;
+
+/* ==========================================================================
+   8. アニメーション
+   ========================================================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
